@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bầu Cua Tết — Giải Trí</title>
+<style>
+:root{--bg:#b70f10;--gold1:#ffd375;--gold2:#ff9c00}
+*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+body{
+  margin:0;background:linear-gradient(180deg,var(--bg),#700306);
+  color:#fff;display:flex;justify-content:center;padding:18px;
+}
+.wrap{width:100%;max-width:420px}
+.header{text-align:center;margin-bottom:8px}
+.badge{
+  display:inline-block;padding:10px 22px;border-radius:12px;
+  background:linear-gradient(180deg,var(--gold1),var(--gold2));
+  color:#5b2400;font-weight:800
+}
+.card{
+  background:rgba(0,0,0,0.12);border-radius:16px;padding:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45)
+}
+
+/* BOWL area */
+.bowl-wrap{
+  position:relative;height:380px;display:flex;
+  align-items:center;justify-content:center;
+  overflow:visible;
+}
+.bowl{
+  width:92%;max-width:360px;height:340px;border-radius:50%;
+  /* đĩa đựng (bowl) - dùng link trực tiếp bạn cho */
+  background-image: url('https://files.catbox.moe/f504ox.png');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  position:relative;margin:0 auto;overflow:visible;
+}
+
+/* LID (úp) - dùng link trực tiếp bạn cho */
+.lid{
+  position:absolute; left:50%; top:-280px;
+  transform:translateX(-50%);
+  width:92%; max-width:360px; height:340px; border-radius:50%;
+  background-image: url('https://files.catbox.moe/gdki4m.png');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+  transition: top 320ms cubic-bezier(.2,.9,.2,1);
+  z-index:1000;
+  pointer-events:none;
+  /* remove any black background fallback */
+  background-color: transparent;
+}
+.lid.cover { top:0; }
+
+/* dice (thẻ) */
+.dice{
+  position:absolute; width:96px; height:96px; border-radius:12px;
+  background:#fff; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 18px rgba(0,0,0,0.25);
+  transition: transform .18s ease, opacity .18s ease;
+  z-index:600; /* dưới lid khi lid.cover */
+  overflow:hidden;
+}
+.dice img{width:100%;height:100%;object-fit:contain;display:block;border-radius:10px}
+
+/* tam giác vị trí */
+.pos-top{ left:50%; top:26%; transform:translate(-50%,-50%); }
+.pos-bl{ left:32%; top:62%; transform:translate(-50%,-50%); }
+.pos-br{ left:68%; top:62%; transform:translate(-50%,-50%); }
+
+/* controls */
+.controls{display:flex;gap:12px;justify-content:center;margin-top:14px}
+.btn{ padding:12px 18px;border-radius:12px;border:none;font-weight:800;cursor:pointer }
+.btn.primary{ background:linear-gradient(180deg,var(--gold1),var(--gold2)); color:#5b2400 }
+.btn.ghost{ background:rgba(255,255,255,0.06); color:#fff }
+
+/* grid below */
+.grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px }
+.tile img{ width:100%; border-radius:12px; display:block; }
+
+/* status */
+.status{text-align:center;margin-top:12px;font-weight:700;min-height:28px}
+
+/* responsive */
+@media (max-width:420px){
+  .dice{ width:78px; height:78px }
+  .pos-bl{ left:30% }
+  .pos-br{ left:70% }
+  .bowl{ height:300px }
+  .lid{ height:300px; top:-250px }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header"><span class="badge">Bầu Cua Tết — Giải Trí</span></div>
+
+  <div class="card">
+    <div class="bowl-wrap">
+      <div class="bowl" id="bowl">
+
+        <!-- 3 quân xếp tam giác -->
+        <div class="dice pos-top" id="d1"><img id="i1" src="" alt="v1"></div>
+        <div class="dice pos-bl" id="d2"><img id="i2" src="" alt="v2"></div>
+        <div class="dice pos-br" id="d3"><img id="i3" src="" alt="v3"></div>
+
+        <!-- đĩa úp -->
+        <div class="lid" id="lid" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn primary" id="xocBtn">XỐC</button>
+      <button class="btn ghost" id="openBtn">MỞ</button>
+    </div>
+
+    <div class="status" id="status">Bấm XỐC để bắt đầu</div>
+
+    <div class="grid">
+      <div class="tile"><img src="https://sf-static.upanhlaylink.com/img/image_20251114febdee31a6193268fb8d9dc26a771365.jpg" alt="nai"></div>
+      <div class="tile"><img src="https://sf-static.upanhlaylink.com/img/image_2025111405709fc6879fcf20050a490d73c19f73.jpg" alt="bau"></div>
+      <div class="tile"><img src="https://sf-static.upanhlaylink.com/img/image_20251114a1b769ea17ef8cd26a0d413dcf73deca.jpg" alt="ga"></div>
+      <div class="tile"><img src="https://sf-static.upanhlaylink.com/img/image_2025111448620e2a5eb17e8b1d1a65dff9e7a7ef.jpg" alt="ca"></div>
+      <div class="tile"><img src="https://sf-static.upanhlaylink.com/img/image_20251114f2bb89e8031203099f442682479585a5.jpg" alt="cua"></div>
+      <div class="tile"><img src="https://sf-static.upanhlaylink.com/img/image_2025111481157c02ec463d209cefe4a43bd255e4.jpg" alt="tom"></div>
+    </div>
+  </div>
+</div>
+
+<!-- âm nhạc: sẽ resume lúc người bấm (click) -->
+<audio id="audio" loop preload="auto" src="https://files.catbox.moe/5fqbht.mp3"></audio>
+
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+
+  // trực tiếp dùng link ảnh bạn cung cấp (sf-static + catbox)
+  const ICONS_URL = {
+    nai: 'https://sf-static.upanhlaylink.com/img/image_20251114febdee31a6193268fb8d9dc26a771365.jpg',
+    bau: 'https://sf-static.upanhlaylink.com/img/image_2025111405709fc6879fcf20050a490d73c19f73.jpg',
+    ga:  'https://sf-static.upanhlaylink.com/img/image_20251114a1b769ea17ef8cd26a0d413dcf73deca.jpg',
+    ca:  'https://sf-static.upanhlaylink.com/img/image_2025111448620e2a5eb17e8b1d1a65dff9e7a7ef.jpg',
+    cua: 'https://sf-static.upanhlaylink.com/img/image_20251114f2bb89e8031203099f442682479585a5.jpg',
+    tom: 'https://sf-static.upanhlaylink.com/img/image_2025111481157c02ec463d209cefe4a43bd255e4.jpg'
+  };
+
+  const ICONS = ['nai','bau','ga','ca','cua','tom']; // index 0..5
+  const rnd = n => Math.floor(Math.random()*n);
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  const lid = document.getElementById('lid');
+  const d1 = document.getElementById('d1'), d2 = document.getElementById('d2'), d3 = document.getElementById('d3');
+  const i1 = document.getElementById('i1'), i2 = document.getElementById('i2'), i3 = document.getElementById('i3');
+  const xocBtn = document.getElementById('xocBtn'), openBtn = document.getElementById('openBtn');
+  const status = document.getElementById('status');
+  const audio = document.getElementById('audio');
+
+  // state
+  let busy = false;
+  let covered = false;
+  // current store indices 0..5
+  let current = [null, null, null];
+
+  // init: show three default icons placed (nai,bau,ga)
+  function setFace(el, idx){
+    const name = ICONS[idx];
+    el.src = ICONS_URL[name];
+    el.parentNode.style.opacity = 1;
+  }
+  function showInitial(){
+    setFace(i1, 0);
+    setFace(i2, 1);
+    setFace(i3, 2);
+  }
+  // hide (blank) - when úp đĩa
+  function hideDice(){
+    d1.style.opacity = 0;
+    d2.style.opacity = 0;
+    d3.style.opacity = 0;
+  }
+  function showDiceByIdx(arr){
+    setFace(i1, arr[0]);
+    setFace(i2, arr[1]);
+    setFace(i3, arr[2]);
+    d1.style.opacity = 1;
+    d2.style.opacity = 1;
+    d3.style.opacity = 1;
+  }
+
+  // ensure audio resume on first interaction (browsers block autoplay)
+  audio.play().catch(()=>{
+    const resumeOnce = () => {
+      audio.play().catch(()=>{});
+      document.removeEventListener('click', resumeOnce);
+      document.removeEventListener('touchstart', resumeOnce);
+    };
+    document.addEventListener('click', resumeOnce);
+    document.addEventListener('touchstart', resumeOnce);
+  });
+
+  // helper pick random avoiding excludes
+  function pickRandomExcluding(exclude){
+    let v = rnd(6), loops=0;
+    while (exclude.includes(v) && loops < 30){
+      v = rnd(6); loops++;
+    }
+    if (exclude.includes(v)){
+      for (let k=0;k<6;k++) if(!exclude.includes(k)) return k;
+    }
+    return v;
+  }
+
+  // initial display
+  showInitial();
+  lid.classList.remove('cover');
+
+  xocBtn.addEventListener('click', async ()=>{
+    if (busy) return;
+    busy = true;
+    status.textContent = 'Đang xốc...';
+
+    // quick visual shuffle (show random faces rapidly)
+    for (let i=0;i<10;i++){
+      showDiceByIdx([rnd(6), rnd(6), rnd(6)]);
+      // small move for wobble
+      d1.style.transform = `translate(${(Math.random()-0.5)*10}px, ${(Math.random()-0.5)*8}px)`;
+      d2.style.transform = `translate(${(Math.random()-0.5)*8}px, ${(Math.random()-0.5)*6}px)`;
+      d3.style.transform = `translate(${(Math.random()-0.5)*8}px, ${(Math.random()-0.5)*6}px)`;
+      await sleep(60 + Math.random()*60);
+    }
+    // reset transforms
+    d1.style.transform = '';
+    d2.style.transform = '';
+    d3.style.transform = '';
+
+    // RULE: viên 1 tăng +5 each round (mod 6)
+    if (current[0] === null) current[0] = rnd(6);
+    else current[0] = (current[0] + 5) % 6;
+
+    // viên 2 & 3 random (avoid duplicates if possible)
+    current[1] = pickRandomExcluding([current[0]]);
+    current[2] = pickRandomExcluding([current[0], current[1]]);
+
+    // úp đĩa (lid trượt xuống) và ẩn quân
+    lid.classList.add('cover');
+    await sleep(240);
+    hideDice();
+    covered = true;
+    busy = false;
+    status.textContent = 'Đã xốc — bấm MỞ để xem';
+  });
+
+  openBtn.addEventListener('click', async ()=>{
+    if (busy) return;
+    if (!covered){ status.textContent = 'Bạn chưa xốc — bấm XỐC trước'; return; }
+    busy = true;
+    // mở đĩa (lid up)
+    lid.classList.remove('cover');
+    await sleep(320);
+    // show result
+    showDiceByIdx(current);
+    covered = false;
+    busy = false;
+    status.textContent = 'Kết quả: ' + ICONS[current[0]] + ' — ' + ICONS[current[1]] + ' — ' + ICONS[current[2]];
+  });
+
+}); // DOMContentLoaded
+</script>
+</body>
+</html>
